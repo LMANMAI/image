@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { ImageContext } from '../hooks/useImageContext';
 import styled from '@emotion/styled'
 
 //styled components
@@ -11,27 +12,29 @@ const Header = styled.div`
     align-items: center;
 `;
 
-const ContainerForm = styled.div`
-    width: 80%;
-    margin: 0 auto;
-    
-`;
 const Formulario = styled.form`
     display: flex;
     padding: 5px;
 `;
 
-
 const NavBar = () => {
+    const { setState } = useContext(ImageContext);
+
+    const [ search, setSearch ] = useState('');
+    const handleSubmit = evt =>{
+        evt.preventDefault();
+        setState(search);
+    }
     return ( 
         <Header>
-            <ContainerForm>
-                <Formulario>
+            <div className="wrap">
+                <Formulario onSubmit={handleSubmit}>
                    <div className="input_field">
                      <input 
                         type="text"
                         placeholder="Ej: Café"
                         className="input"
+                        onChange={e=>setSearch(e.target.value)}
                     />
                    </div>
                    <input
@@ -40,7 +43,8 @@ const NavBar = () => {
                         className="btn btn-submit"
                     />
                 </Formulario>
-            </ContainerForm>
+                
+            </div>
         </Header>
      );
 }
