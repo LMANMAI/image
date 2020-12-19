@@ -1,27 +1,44 @@
-import React, {useContext} from 'react';
+import React, {Fragment, useContext} from 'react';
 //importo el context
 import { ImageContext } from '../hooks/useImageContext';
 import Card from './Card';
 
 const CardPanel = () => {
-    const { result, historial } = useContext(ImageContext);
-    const resultArray = result;
+    const { result, paginaAnterior,paginaSiguiente, pages, totalpaages, setTag } = useContext(ImageContext);
+   // const resultArray = result;
+    //logica de los botones
     
     return ( 
-         <>
-         <div className="wrap">
-          <div className="card_panel ">
-               {resultArray.map(resulta =>(
-                    <Card 
-                         key={resulta.id}
-                         resulta={resulta}
-                    />
-               ))}
-               
+     <Fragment>
+         <div  className="card_panel">
+          <div className="wrap_card">
+           {result.map(resulta =>(
+                         <Card 
+                              key={resulta.id}
+                              resulta={resulta}
+                              setTag={setTag}
+                         />
+                    ))}
+                    
+               </div>
+        </div>
+         <div className="btn_container">
+
+               {(pages === 1) ?null :(
+                    <button
+                    className="btn_page"
+                    onClick={paginaAnterior}
+               >Anterior</button>
+               )}
+
+               {(pages === totalpaages) ?null :(
+                    <button
+                    className="btn_page"
+                    onClick={paginaSiguiente}
+          >Siguiente</button>
+               )}
           </div>
-          <button>boton</button>
-          </div>
-        </>
+</Fragment>
      );
 }
  
