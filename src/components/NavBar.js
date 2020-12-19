@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { ImageContext } from '../hooks/useImageContext';
 import styled from '@emotion/styled'
-
 //styled components
 const Header = styled.div`
     height: 50px;
@@ -11,20 +10,24 @@ const Header = styled.div`
     display: flex;
     align-items: center;
 `;
-
 const Formulario = styled.form`
     display: flex;
     padding: 5px;
 `;
 
-const NavBar = () => {
+const NavBar = ({SetError}) => {
     const { setState } = useContext(ImageContext);
-
     const [ search, setSearch ] = useState('');
     const handleSubmit = evt =>{
         evt.preventDefault();
+        if(search === ''){
+            SetError(true);
+            return;
+        }
         setState(search);
+        SetError(false);
     }
+  
     return ( 
         <Header>
             <div className="wrap">
@@ -39,7 +42,7 @@ const NavBar = () => {
                    </div>
                    <input
                         type="submit"
-                        value="Buscar!"
+                        value="Q"
                         className="btn btn-submit"
                     />
                 </Formulario>
