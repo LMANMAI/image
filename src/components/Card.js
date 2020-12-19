@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import {ImageContext} from '../hooks/useImageContext';
 
 const Card = ({resulta}) => {
+    const { setTagSearch, setState } = useContext(ImageContext);
     const { tags, largeImageURL, pageURL, imageHeight } = resulta; 
-    const [ height, setHeight ] = useState();
     let arrayTags = [];
     arrayTags = tags.split([',']);
-
-
     
-  
-
     return ( 
         <div className="card">
             <div className="card_image">
-                <img src={largeImageURL} alt={tags}/>
-            </div>
+                    <a 
+                    href={largeImageURL}
+                    target="_blank"    
+                    rel="noreferrer"            
+                >
+                        <img src={largeImageURL} alt={tags}/>
+                    </a>
+                </div>
+            
             <div className="card_body">
                 {arrayTags.map( tag=> (
-                        <span className="hashtag">#{tag}</span>
+                        <a onClick={()=>setState(tag)}  className="hashtag">#{tag}</a>
                 ))}
             </div>
             <div className="card_footer">
-            <input 
-                type="submit"
+           
+            {/*<a 
+                href={largeImageURL}    
+                download={largeImageURL}     
                 className="btn btn_vermas"
-                value="ver original"
-                /*{/* evento onclick que redireccione para el link }*/
-            />
-            <input 
-                type="submit"
-                className="btn btn_download"
-                value="Descargar"
-                /*{/* evento onclick que redireccione para el link }*/
-            />
+                target="_blank"
+            >Ver Original</a>*/}
+            
             </div>
             
 
